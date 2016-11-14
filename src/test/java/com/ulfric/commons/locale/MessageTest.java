@@ -10,49 +10,49 @@ final class MessageTest {
 
 	@Test
 	@DisplayName("Message.builder() is not null")
-	void testMessageBuilderIsNotNull()
+	void testBuilderIsNotNull()
 	{
 		Truth.assertThat(Message.builder()).isNotNull();
 	}
 
 	@Test
 	@DisplayName("Message.builder() is unique")
-	void testMessageBuilderIsUnique()
+	void testBuilderIsUnique()
 	{
 		Truth.assertThat(Message.builder()).isNotSameAs(Message.builder());
 	}
 
 	@Test
 	@DisplayName("Message.builder().setCode(null) throws NullPointerException")
-	void testMessageBuilderNullCodeThrowsNullPointerException()
+	void testBuilderNullCodeThrowsNullPointerException()
 	{
 		Assertions.expectThrows(NullPointerException.class, () -> Message.builder().setCode(null));
 	}
 
 	@Test
 	@DisplayName("Message.builder().setCode(\"\").build() throws NullPointerException")
-	void testMessageBuilderNoMessagesThrowsNullPointerException()
+	void testBuilderNoMessagesThrowsNullPointerException()
 	{
 		Assertions.expectThrows(NullPointerException.class, () -> Message.builder().setCode("").build());
 	}
 
 	@Test
 	@DisplayName("Message.builder().setCode(\"\").setSingular(\"A\").build().getRawTest() equals \"A\"")
-	void testMessageBuilderSingularMessageANoPluralGetRawTextIsA()
+	void testBuilderSingularMessageANoPluralGetRawTextIsA()
 	{
 		Truth.assertThat(Message.builder().setCode("").setSingular("A").build().getRawText()).isEqualTo("A");
 	}
 
 	@Test
 	@DisplayName("Message.builder().setCode(\"\").setPlural(\"A\").build().getRawTest() equals \"A\"")
-	void testMessageBuilderPluralMessageANoSingularGetRawTextIsA()
+	void testBuilderPluralMessageANoSingularGetRawTextIsA()
 	{
 		Truth.assertThat(Message.builder().setCode("").setPlural("A").build().getRawText()).isEqualTo("A");
 	}
 
 	@Test
 	@DisplayName("Message with no plural returns itself when Message.plural() is called")
-	void testMessageBuilderSingularMessageANoPluralIdentityEqualsPlural()
+	void testBuilderSingularMessageANoPluralIdentityEqualsPlural()
 	{
 		Message message = Message.builder().setCode("").setSingular("A").build();
 
@@ -61,7 +61,7 @@ final class MessageTest {
 
 	@Test
 	@DisplayName("Message with no singular returns itself when Message.singular() is called")
-	void testMessageBuilderPluralMessageANoSingularIdentityEqualsSingular()
+	void testBuilderPluralMessageANoSingularIdentityEqualsSingular()
 	{
 		Message message = Message.builder().setCode("").setPlural("A").build();
 
@@ -70,7 +70,7 @@ final class MessageTest {
 
 	@Test
 	@DisplayName("Message with with singular and plural are unique")
-	void testMessageBuilderSingularAPluralBAreNotTheSame()
+	void testBuilderSingularAPluralBAreNotTheSame()
 	{
 		Message message = Message.builder().setCode("").setSingular("A").setPlural("B").build();
 
