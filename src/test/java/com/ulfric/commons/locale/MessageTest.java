@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import com.google.common.collect.ImmutableMap;
 import com.google.common.truth.Truth;
 
 final class MessageTest {
@@ -79,12 +80,30 @@ final class MessageTest {
 
 	@Test
 	@DisplayName("Message with with singular and plural have the correct values")
-	void testMessageSingularAPluralBAreCorrect()
+	void testSingularAPluralBAreCorrect()
 	{
 		Message message = Message.builder().setCode("").setSingular("A").setPlural("B").build();
 
 		Truth.assertThat(message.singular().getRawText()).isEqualTo("A");
 		Truth.assertThat(message.plural().getRawText()).isEqualTo("B");
+	}
+
+	@Test
+	@DisplayName("Message.format(Object...) works")
+	void testFormatVarargs()
+	{
+		Message message = Message.builder().setCode("").setSingular("Test: {a}").build();
+
+		Truth.assertThat(message.singular().format("a", "A")).isEqualTo("Test: A");
+	}
+
+	@Test
+	@DisplayName("Message.format(Map<String, Object>) works")
+	void testFormatMap()
+	{
+		Message message = Message.builder().setCode("").setSingular("Test: {a}").build();
+
+		Truth.assertThat(message.singular().format(ImmutableMap.of("a", "A"))).isEqualTo("Test: A");
 	}
 
 }

@@ -1,5 +1,6 @@
 package com.ulfric.commons.locale;
 
+import java.util.Map;
 import java.util.Objects;
 
 import com.ulfric.commons.object.ObjectUtils;
@@ -74,6 +75,46 @@ public abstract class Message {
 	public final String getRawText()
 	{
 		return this.message;
+	}
+
+	public final String format(Object... objects)
+	{
+		Objects.requireNonNull(objects);
+
+		int length = objects.length;
+		if (length % 2 != 0)
+		{
+			throw new IllegalArgumentException("Format values must be equal amounts of key-value pairs");
+		}
+
+		String encoded = this.message;
+
+		for (int x = 0; x < length; x += 2)
+		{
+			String key = '{' + String.valueOf(objects[x]) + '}';
+			String value = String.valueOf(objects[x + 1]);
+
+			encoded = encoded.replace(key, value);
+		}
+
+		return encoded;
+	}
+
+	public final String format(Map<String, Object> objects)
+	{
+		Objects.requireNonNull(objects);
+
+		String formatted = this.message;
+
+		for (Map.Entry<String, Object> entry : objects.entrySet())
+		{
+			String key = '{' + entry.getKey() + '}';
+			String value = String.valueOf(entry.getValue());
+
+			formatted = formatted.replace(key, value);
+		}
+
+		return formatted;
 	}
 
 	public Message singular()
