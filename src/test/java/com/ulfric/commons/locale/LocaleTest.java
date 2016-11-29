@@ -4,10 +4,13 @@ import java.util.UUID;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.runner.RunWith;
 
 import com.google.common.truth.Truth;
 import com.google.common.truth.Truth8;
 
+@RunWith(JUnitPlatform.class)
 final class LocaleTest {
 
 	@Test
