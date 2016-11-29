@@ -2,6 +2,7 @@ package com.ulfric.commons.locale;
 
 import java.util.UUID;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.platform.runner.JUnitPlatform;
@@ -13,18 +14,26 @@ import com.google.common.truth.Truth8;
 @RunWith(JUnitPlatform.class)
 final class LocaleTest {
 
+	private Locale.Builder builder;
+
+	@BeforeEach
+	void init()
+	{
+		this.builder = Locale.builder();
+	}
+
 	@Test
 	@DisplayName("Locale.builder() is not null")
 	void testBuilderNotNull()
 	{
-		Truth.assertThat(Locale.builder()).isNotNull();
+		Truth.assertThat(this.builder).isNotNull();
 	}
 
 	@Test
 	@DisplayName("Locale.builder() is unique")
 	void testBuilderIsUnique()
 	{
-		Truth.assertThat(Locale.builder()).isNotSameAs(Locale.builder());
+		Truth.assertThat(this.builder).isNotSameAs(Locale.builder());
 	}
 
 	@Test
@@ -36,17 +45,15 @@ final class LocaleTest {
 
 	private Locale buildLocale(int messageCount)
 	{
-		Locale.Builder builder = Locale.builder();
-
-		builder.setCode(UUID.randomUUID().toString());
+		this.builder.setCode(UUID.randomUUID().toString());
 
 		for (int x = 0; x < messageCount; x++)
 		{
 			String m = String.valueOf(x);
-			builder.addMessage(Message.builder().setCode(m).setSingular(m).setPlural(m).build());
+			this.builder.addMessage(Message.builder().setCode(m).setSingular(m).setPlural(m).build());
 		}
 
-		return builder.build();
+		return this.builder.build();
 	}
 
 }
