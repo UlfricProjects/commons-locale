@@ -3,7 +3,7 @@ package com.ulfric.commons.locale;
 import java.util.Map;
 import java.util.Objects;
 
-import com.ulfric.commons.object.ObjectUtils;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 
 public abstract class Message {
 
@@ -130,7 +130,7 @@ public abstract class Message {
 	@Override
 	public String toString()
 	{
-		return ObjectUtils.generateString(this);
+		return ToStringBuilder.reflectionToString(this);
 	}
 
 	private static final class SingularMessage extends Message

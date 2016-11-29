@@ -8,7 +8,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
-import com.ulfric.commons.object.ObjectUtils;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 
 public final class Locale implements Comparable<Locale>, Iterable<Message> {
 
@@ -123,7 +123,7 @@ public final class Locale implements Comparable<Locale>, Iterable<Message> {
 	@Override
 	public String toString()
 	{
-		return ObjectUtils.generateString(this);
+		return ToStringBuilder.reflectionToString(this);
 	}
 
 	@Override

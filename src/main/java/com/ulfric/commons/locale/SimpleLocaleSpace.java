@@ -5,7 +5,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
-import com.ulfric.commons.object.ObjectUtils;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 
 public final class SimpleLocaleSpace implements LocaleSpace {
 
@@ -84,7 +84,7 @@ public final class SimpleLocaleSpace implements LocaleSpace {
 	@Override
 	public String toString()
 	{
-		return ObjectUtils.generateString(this);
+		return ToStringBuilder.reflectionToString(this);
 	}
 
 }
