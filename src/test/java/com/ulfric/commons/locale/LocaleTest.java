@@ -8,8 +8,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.platform.runner.JUnitPlatform;
 import org.junit.runner.RunWith;
 
-import com.google.common.truth.Truth;
-import com.google.common.truth.Truth8;
+import com.ulfric.verify.Verify;
 
 @RunWith(JUnitPlatform.class)
 final class LocaleTest {
@@ -26,21 +25,21 @@ final class LocaleTest {
 	@DisplayName("Locale.builder() is not null")
 	void testBuilderNotNull()
 	{
-		Truth.assertThat(this.builder).isNotNull();
+		Verify.that(this.builder).isNotNull();
 	}
 
 	@Test
 	@DisplayName("Locale.builder() is unique")
 	void testBuilderIsUnique()
 	{
-		Truth.assertThat(this.builder).isNotSameAs(Locale.builder());
+		Verify.that(this.builder).isNotSameAs(Locale.builder());
 	}
 
 	@Test
 	@DisplayName("Locale.builder() is unique")
 	void testPopulated()
 	{
-		Truth8.assertThat(this.buildLocale(1).getMessage("0")).isPresent();
+		Verify.that(this.buildLocale(1).getMessage("0")).isPresent();
 	}
 
 	private Locale buildLocale(int messageCount)

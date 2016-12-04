@@ -1,5 +1,7 @@
 package com.ulfric.commons.locale;
 
+import java.util.Collections;
+
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -7,8 +9,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.platform.runner.JUnitPlatform;
 import org.junit.runner.RunWith;
 
-import com.google.common.collect.ImmutableMap;
-import com.google.common.truth.Truth;
+import com.ulfric.verify.Verify;
 
 @RunWith(JUnitPlatform.class)
 final class MessageTest {
@@ -25,14 +26,14 @@ final class MessageTest {
 	@DisplayName("Message.builder() is not null")
 	void testBuilderIsNotNull()
 	{
-		Truth.assertThat(this.builder).isNotNull();
+		Verify.that(this.builder).isNotNull();
 	}
 
 	@Test
 	@DisplayName("Message.builder() is unique")
 	void testBuilderIsUnique()
 	{
-		Truth.assertThat(this.builder).isNotSameAs(Message.builder());
+		Verify.that(this.builder).isNotSameAs(Message.builder());
 	}
 
 	@Test
@@ -53,14 +54,14 @@ final class MessageTest {
 	@DisplayName("Message.builder().setCode(\"\").setSingular(\"A\").build().getRawTest() equals \"A\"")
 	void testBuilderSingularMessageANoPluralGetRawTextIsA()
 	{
-		Truth.assertThat(this.builder.setSingular("A").build().getRawText()).isEqualTo("A");
+		Verify.that(this.builder.setSingular("A").build().getRawText()).isEqualTo("A");
 	}
 
 	@Test
 	@DisplayName("Message.builder().setCode(\"\").setPlural(\"A\").build().getRawTest() equals \"A\"")
 	void testBuilderPluralMessageANoSingularGetRawTextIsA()
 	{
-		Truth.assertThat(this.builder.setPlural("A").build().getRawText()).isEqualTo("A");
+		Verify.that(this.builder.setPlural("A").build().getRawText()).isEqualTo("A");
 	}
 
 	@Test
@@ -69,7 +70,7 @@ final class MessageTest {
 	{
 		Message message = this.builder.setSingular("A").build();
 
-		Truth.assertThat(message.plural()).isSameAs(message);
+		Verify.that(message.plural()).isSameAs(message);
 	}
 
 	@Test
@@ -78,7 +79,7 @@ final class MessageTest {
 	{
 		Message message = this.builder.setPlural("A").build();
 
-		Truth.assertThat(message.singular()).isSameAs(message);
+		Verify.that(message.singular()).isSameAs(message);
 	}
 
 	@Test
@@ -87,7 +88,7 @@ final class MessageTest {
 	{
 		Message message = this.builder.setSingular("A").setPlural("B").build();
 
-		Truth.assertThat(message.singular()).isNotSameAs(message.plural());
+		Verify.that(message.singular()).isNotSameAs(message.plural());
 	}
 
 	@Test
@@ -96,8 +97,8 @@ final class MessageTest {
 	{
 		Message message = this.builder.setSingular("A").setPlural("B").build();
 
-		Truth.assertThat(message.singular().getRawText()).isEqualTo("A");
-		Truth.assertThat(message.plural().getRawText()).isEqualTo("B");
+		Verify.that(message.singular().getRawText()).isEqualTo("A");
+		Verify.that(message.plural().getRawText()).isEqualTo("B");
 	}
 
 	@Test
@@ -106,7 +107,7 @@ final class MessageTest {
 	{
 		Message message = this.builder.setSingular("Test: {a}").build();
 
-		Truth.assertThat(message.singular().format("a", "A")).isEqualTo("Test: A");
+		Verify.that(message.singular().format("a", "A")).isEqualTo("Test: A");
 	}
 
 	@Test
@@ -115,7 +116,7 @@ final class MessageTest {
 	{
 		Message message = this.builder.setSingular("Test: {a}").build();
 
-		Truth.assertThat(message.singular().format(ImmutableMap.of("a", "A"))).isEqualTo("Test: A");
+		Verify.that(message.singular().format(Collections.singletonMap("a", "A"))).isEqualTo("Test: A");
 	}
 
 }

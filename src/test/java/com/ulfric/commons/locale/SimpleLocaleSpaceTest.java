@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.platform.runner.JUnitPlatform;
 import org.junit.runner.RunWith;
 
-import com.google.common.truth.Truth;
+import com.ulfric.verify.Verify;
 
 @RunWith(JUnitPlatform.class)
 class SimpleLocaleSpaceTest {
@@ -23,14 +23,14 @@ class SimpleLocaleSpaceTest {
 	@DisplayName("newInstance is not null")
 	void testNewInstanceNotNull()
 	{
-		Truth.assertThat(this.space).isNotNull();
+		Verify.that(this.space).isNotNull();
 	}
 
 	@Test
 	@DisplayName("newInstance is unique")
 	void testNewInstanceIsUnique()
 	{
-		Truth.assertThat(this.space).isNotSameAs(SimpleLocaleSpace.newInstance());
+		Verify.that(this.space).isNotSameAs(SimpleLocaleSpace.newInstance());
 	}
 
 	@Test
@@ -39,7 +39,7 @@ class SimpleLocaleSpaceTest {
 	{
 		this.space.install(Locale.builder().setCode("").build());
 
-		Truth.assertThat(this.space.hasLocale("")).isTrue();
+		Verify.that(this.space.hasLocale("")).isTrue();
 	}
 
 }
