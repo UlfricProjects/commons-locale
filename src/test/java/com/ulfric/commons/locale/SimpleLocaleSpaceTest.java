@@ -16,7 +16,7 @@ class SimpleLocaleSpaceTest {
 	@BeforeEach
 	void init()
 	{
-		this.space = SimpleLocaleSpace.newInstance();
+		this.space = LocaleSpace.newInstance();
 	}
 
 	@Test
@@ -30,7 +30,7 @@ class SimpleLocaleSpaceTest {
 	@DisplayName("newInstance is unique")
 	void testNewInstanceIsUnique()
 	{
-		Verify.that(this.space).isNotSameAs(SimpleLocaleSpace.newInstance());
+		Verify.that(this.space).isNotSameAs(LocaleSpace.newInstance());
 	}
 
 	@Test
