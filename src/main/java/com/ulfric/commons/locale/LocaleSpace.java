@@ -7,14 +7,7 @@ import java.util.Optional;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
-public final class LocaleSpace {
-
-	public static LocaleSpace newInstance()
-	{
-		return new LocaleSpace();
-	}
-
-	private LocaleSpace() { }
+public class LocaleSpace {
 
 	private final Map<String, Locale> locales = new HashMap<>();
 
@@ -47,35 +40,11 @@ public final class LocaleSpace {
 			return locale;
 		}
 
-		Locale mixed = Locale.builder().setCode(code).addMessages(current.getMessages()).addMessages(locale.getMessages()).build();
+		Locale mixed = Locale.builder().setCode(code).addMessages(current).addMessages(locale).build();
 
 		this.locales.put(code, mixed);
 
 		return mixed;
-	}
-
-	@Override
-	public int hashCode()
-	{
-		return this.locales.hashCode();
-	}
-
-	@Override
-	public boolean equals(Object object)
-	{
-		if (object == this)
-		{
-			return true;
-		}
-
-		if (!(object instanceof LocaleSpace))
-		{
-			return false;
-		}
-
-		LocaleSpace other = (LocaleSpace) object;
-
-		return this.locales.equals(other.locales);
 	}
 
 	@Override

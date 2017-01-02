@@ -1,6 +1,5 @@
 package com.ulfric.commons.locale;
 
-import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -10,7 +9,7 @@ import java.util.Optional;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
-public final class Locale implements Comparable<Locale>, Iterable<Message> {
+public final class Locale implements Iterable<Message> {
 
 	public static Builder builder()
 	{
@@ -77,11 +76,16 @@ public final class Locale implements Comparable<Locale>, Iterable<Message> {
 
 	private final String code;
 	private final Map<String, Message> messages;
-	private transient int hash = -1;
 
 	public String getCode()
 	{
 		return this.code;
+	}
+
+	@Override
+	public Iterator<Message> iterator()
+	{
+		return this.messages.values().iterator();
 	}
 
 	public Optional<Message> getMessage(String code)
@@ -89,55 +93,10 @@ public final class Locale implements Comparable<Locale>, Iterable<Message> {
 		return Optional.ofNullable(this.messages.get(String.valueOf(code).toLowerCase()));
 	}
 
-	public Collection<Message> getMessages()
-	{
-		return this.messages.values();
-	}
-
-	@Override
-	public Iterator<Message> iterator()
-	{
-		return this.getMessages().iterator();
-	}
-
-	@Override
-	public boolean equals(Object object)
-	{
-		if (object == this) return true;
-
-		if (!(object instanceof Locale)) return false;
-
-		Locale o = (Locale) object;
-
-		return this.code.equals(o.code) && this.messages.equals(o.messages);
-	}
-
-	@Override
-	public int hashCode()
-	{
-		if (this.hash != -1) return this.hash;
-
-		return this.hash = Objects.hash(this.code, this.messages);
-	}
-
 	@Override
 	public String toString()
 	{
 		return ToStringBuilder.reflectionToString(this);
-	}
-
-	@Override
-	public int compareTo(Locale other)
-	{
-		Objects.requireNonNull(other);
-
-		if (other == this) return 0;
-
-		int c = Integer.compare(other.messages.size(), this.messages.size());
-
-		if (c != 0) return c;
-
-		return this.code.compareTo(other.code);
 	}
 
 }

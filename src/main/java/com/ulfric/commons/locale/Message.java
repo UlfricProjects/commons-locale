@@ -3,8 +3,6 @@ package com.ulfric.commons.locale;
 import java.util.Map;
 import java.util.Objects;
 
-import org.apache.commons.lang3.builder.ToStringBuilder;
-
 public abstract class Message {
 
 	public static Builder builder()
@@ -128,10 +126,7 @@ public abstract class Message {
 	}
 
 	@Override
-	public String toString()
-	{
-		return ToStringBuilder.reflectionToString(this);
-	}
+	public abstract String toString();
 
 	private static final class SingularMessage extends Message
 	{
@@ -156,6 +151,12 @@ public abstract class Message {
 		{
 			return this.pluralMessage;
 		}
+
+		@Override
+		public String toString()
+		{
+			return "SingularMessage[" + this.getRawText() + "]";
+		}
 	}
 
 	private static final class PluralMessage extends Message
@@ -173,6 +174,12 @@ public abstract class Message {
 		public Message singular()
 		{
 			return this.singular;
+		}
+
+		@Override
+		public String toString()
+		{
+			return "PluralMessage[" + this.getRawText() + "]";
 		}
 	}
 

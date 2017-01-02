@@ -74,6 +74,15 @@ final class MessageTest {
 	}
 
 	@Test
+	@DisplayName("Message with no singular returns itself when Message.plural() is called")
+	void testBuilderSingularMessageANoPluralIdentityEqualsSingularPlural()
+	{
+		Message message = this.builder.setPlural("A").build();
+
+		Verify.that(message.plural()).isSameAs(message);
+	}
+
+	@Test
 	@DisplayName("Message with no singular returns itself when Message.singular() is called")
 	void testBuilderPluralMessageANoSingularIdentityEqualsSingular()
 	{
@@ -111,12 +120,41 @@ final class MessageTest {
 	}
 
 	@Test
+	@DisplayName("Message.format(Object...) works")
+	void testFormatVarargsWithOddArguments()
+	{
+		Message message = this.builder.setSingular("Test: {a}").build();
+
+		Verify.that(() -> message.format("a", "A", "odd one out")).doesThrow(
+				IllegalArgumentException.class,
+				"Format values must be equal amounts of key-value pairs");
+	}
+
+	@Test
 	@DisplayName("Message.format(Map<String, Object>) works")
 	void testFormatMap()
 	{
 		Message message = this.builder.setSingular("Test: {a}").build();
 
 		Verify.that(message.singular().format(Collections.singletonMap("a", "A"))).isEqualTo("Test: A");
+	}
+
+	@Test
+	@DisplayName("Message.singular().toString()")
+	void testSingularToString()
+	{
+		Message message = this.builder.setSingular("A").build();
+
+		Verify.that(message.singular().toString()).isEqualTo("SingularMessage[A]");
+	}
+
+	@Test
+	@DisplayName("Message.plural().toString()")
+	void testPluralToString()
+	{
+		Message message = this.builder.setPlural("A").build();
+
+		Verify.that(message.plural().toString()).isEqualTo("PluralMessage[A]");
 	}
 
 }
