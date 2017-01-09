@@ -2,7 +2,6 @@ package com.ulfric.commons.locale;
 
 import java.util.Collections;
 
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -40,14 +39,14 @@ final class MessageTest {
 	@DisplayName("Message.builder().setCode(null) throws NullPointerException")
 	void testBuilderNullCodeThrowsNullPointerException()
 	{
-		Assertions.expectThrows(NullPointerException.class, () -> this.builder.setCode(null));
+		Verify.that(() -> this.builder.setCode(null)).doesThrow(NullPointerException.class);
 	}
 
 	@Test
 	@DisplayName("Message.builder().setCode(\"\").build() throws NullPointerException")
 	void testBuilderNoMessagesThrowsNullPointerException()
 	{
-		Assertions.expectThrows(NullPointerException.class, () -> this.builder.build());
+		Verify.that(this.builder::build).doesThrow(NullPointerException.class);
 	}
 
 	@Test
