@@ -5,7 +5,6 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Optional;
 
 import com.ulfric.commons.bean.Bean;
 
@@ -89,9 +88,9 @@ public final class Locale extends Bean implements Iterable<Message> {
 		return this.messages.values().iterator();
 	}
 
-	public Optional<Message> getMessage(String code)
+	public Message getMessage(String code)
 	{
-		return Optional.ofNullable(this.messages.get(String.valueOf(code).toLowerCase()));
+		return this.messages.get(String.valueOf(code).toLowerCase());
 	}
 
 }
