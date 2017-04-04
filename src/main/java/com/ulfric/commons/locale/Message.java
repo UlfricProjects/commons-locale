@@ -1,62 +1,44 @@
 package com.ulfric.commons.locale;
 
-import java.util.Map;
 import java.util.Objects;
 
-public abstract class Message {
+public final class Message {
 
 	public static Builder builder()
 	{
 		return new Builder();
 	}
 
-	public static final class Builder
+	public static final class Builder implements org.apache.commons.lang3.builder.Builder<Message>
 	{
+		private String code;
+		private String text;
+
 		Builder() { }
 
-		private String code;
-		private String singular;
-		private String plural;
-
+		@Override
 		public Message build()
 		{
 			Objects.requireNonNull(this.code);
+			Objects.requireNonNull(this.text);
 
-			if (this.singular == null)
-			{
-				Objects.requireNonNull(this.plural);
-
-				return new PluralMessage(this.code, this.plural, null);
-			}
-
-			return new SingularMessage(this.code, this.singular, this.plural);
+			return new Message(this.code, this.text);
 		}
 
 		public Builder setCode(String code)
 		{
-			Objects.requireNonNull(code);
-
 			this.code = code;
-
 			return this;
 		}
 
-		public Builder setSingular(String singular)
+		public Builder setText(String text)
 		{
-			this.singular = singular;
-
-			return this;
-		}
-
-		public Builder setPlural(String plural)
-		{
-			this.plural = plural;
-
+			this.text = text;
 			return this;
 		}
 	}
 
-	protected Message(String code, String message)
+	Message(String code, String message)
 	{
 		this.code = code;
 		this.message = message;
@@ -65,122 +47,14 @@ public abstract class Message {
 	private final String code;
 	private final String message;
 
-	public final String getCode()
+	public String getCode()
 	{
 		return this.code;
 	}
 
-	public final String getRawText()
+	public String getText()
 	{
 		return this.message;
-	}
-
-	public final String format(Object... objects)
-	{
-		Objects.requireNonNull(objects);
-
-		int length = objects.length;
-		if (length % 2 != 0)
-		{
-			throw new IllegalArgumentException("Format values must be equal amounts of key-value pairs");
-		}
-
-		String encoded = this.message;
-
-		for (int x = 0; x < length; x += 2)
-		{
-			String key = '{' + String.valueOf(objects[x]) + '}';
-			String value = String.valueOf(objects[x + 1]);
-
-			encoded = encoded.replace(key, value);
-		}
-
-		return encoded;
-	}
-
-	public final String format(Map<String, Object> objects)
-	{
-		Objects.requireNonNull(objects);
-
-		String formatted = this.message;
-
-		for (Map.Entry<String, Object> entry : objects.entrySet())
-		{
-			String key = '{' + entry.getKey() + '}';
-			String value = String.valueOf(entry.getValue());
-
-			formatted = formatted.replace(key, value);
-		}
-
-		return formatted;
-	}
-
-	public Message singular()
-	{
-		return this;
-	}
-
-	public Message plural()
-	{
-		return this;
-	}
-
-	@Override
-	public abstract String toString();
-
-	private static final class SingularMessage extends Message
-	{
-		SingularMessage(String code, String message, String plural)
-		{
-			super(code, message);
-
-			if (plural == null)
-			{
-				this.pluralMessage = this;
-			}
-			else
-			{
-				this.pluralMessage = new PluralMessage(code, plural, this);
-			}
-		}
-
-		private final Message pluralMessage;
-
-		@Override
-		public Message plural()
-		{
-			return this.pluralMessage;
-		}
-
-		@Override
-		public String toString()
-		{
-			return "SingularMessage[" + this.getRawText() + "]";
-		}
-	}
-
-	private static final class PluralMessage extends Message
-	{
-		PluralMessage(String code, String message, Message singular)
-		{
-			super(code, message);
-
-			this.singular = singular == null ? this : singular;
-		}
-
-		private final Message singular;
-
-		@Override
-		public Message singular()
-		{
-			return this.singular;
-		}
-
-		@Override
-		public String toString()
-		{
-			return "PluralMessage[" + this.getRawText() + "]";
-		}
 	}
 
 }

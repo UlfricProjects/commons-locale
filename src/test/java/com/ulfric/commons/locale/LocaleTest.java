@@ -50,21 +50,10 @@ final class LocaleTest {
 	@DisplayName("Locale.builder().addMessages(Iterable) works")
 	void testAddMessages()
 	{
-		Message message = Message.builder().setCode("hello").setSingular("Hello, world!").build();
+		Message message = Message.builder().setCode("hello").setText("Hello, world!").build();
 		Locale locale = Locale.builder().setCode("en_US").addMessages(Arrays.asList(message, null)).build();
 		List<Message> messages = StreamSupport.stream(locale.spliterator(), false).collect(Collectors.toList());
 		Verify.that(messages).contains(message);
-	}
-
-	@Test
-	void testToString()
-	{
-		Locale locale = this.buildLocale(5);
-		String expected = locale.getClass().getCanonicalName() + "@" +
-				Integer.toHexString(System.identityHashCode(locale)) + "[code=" + locale.getCode() +
-				",messages={0=SingularMessage[0], 1=SingularMessage[1], 2=SingularMessage[2], " +
-				"3=SingularMessage[3], 4=SingularMessage[4]}]";
-		Verify.that(locale.toString()).isEqualTo(expected);
 	}
 
 	private Locale buildLocale(int messageCount)
@@ -74,7 +63,7 @@ final class LocaleTest {
 		for (int x = 0; x < messageCount; x++)
 		{
 			String m = String.valueOf(x);
-			this.builder.addMessage(Message.builder().setCode(m).setSingular(m).setPlural(m).build());
+			this.builder.addMessage(Message.builder().setCode(m).setText(m).build());
 		}
 
 		return this.builder.build();
