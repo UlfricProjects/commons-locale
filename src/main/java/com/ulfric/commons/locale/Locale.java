@@ -5,30 +5,30 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Optional;
 
-import org.apache.commons.lang3.builder.ToStringBuilder;
+import com.ulfric.commons.bean.Bean;
 
-public final class Locale implements Iterable<Message> {
+public final class Locale extends Bean implements Iterable<Message> {
 
 	public static Builder builder()
 	{
 		return new Builder();
 	}
 
-	public static final class Builder
+	public static final class Builder implements org.apache.commons.lang3.builder.Builder<Locale>
 	{
+		private String code;
+		private final Map<String, Message> messages = new HashMap<>();
+
 		Builder() { }
 
+		@Override
 		public Locale build()
 		{
 			Objects.requireNonNull(this.code);
 
 			return new Locale(this.code, Collections.unmodifiableMap(new HashMap<>(this.messages)));
 		}
-
-		private String code;
-		private final Map<String, Message> messages = new HashMap<>();
 
 		public Builder setCode(String code)
 		{
@@ -88,15 +88,9 @@ public final class Locale implements Iterable<Message> {
 		return this.messages.values().iterator();
 	}
 
-	public Optional<Message> getMessage(String code)
+	public Message getMessage(String code)
 	{
-		return Optional.ofNullable(this.messages.get(String.valueOf(code).toLowerCase()));
-	}
-
-	@Override
-	public String toString()
-	{
-		return ToStringBuilder.reflectionToString(this);
+		return this.messages.get(String.valueOf(code).toLowerCase());
 	}
 
 }
