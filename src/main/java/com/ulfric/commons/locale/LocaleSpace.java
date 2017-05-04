@@ -5,9 +5,9 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
-import org.apache.commons.lang3.builder.ToStringBuilder;
+import com.ulfric.commons.bean.Bean;
 
-public class LocaleSpace {
+public class LocaleSpace extends Bean {
 
 	private final Map<String, Locale> locales = new HashMap<>();
 
@@ -45,12 +45,6 @@ public class LocaleSpace {
 		this.locales.put(code, mixed);
 
 		return mixed;
-	}
-
-	@Override
-	public String toString()
-	{
-		return ToStringBuilder.reflectionToString(this);
 	}
 
 }

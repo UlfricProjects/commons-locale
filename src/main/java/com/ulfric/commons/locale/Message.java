@@ -2,7 +2,9 @@ package com.ulfric.commons.locale;
 
 import java.util.Objects;
 
-public final class Message {
+import com.ulfric.commons.bean.Bean;
+
+public final class Message extends Bean {
 
 	public static Builder builder()
 	{

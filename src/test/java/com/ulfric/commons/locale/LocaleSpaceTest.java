@@ -46,14 +46,6 @@ class LocaleSpaceTest {
 		Verify.that(this.space.getLocale("")).isPresent();
 	}
 
-	@Test
-	void testToString()
-	{
-		String expected = this.space.getClass().getCanonicalName() + "@" +
-				Integer.toHexString(System.identityHashCode(this.space)) + "[locales={}]";
-		Verify.that(this.space.toString()).isEqualTo(expected);
-	}
-
 	private void installEmptyLocale()
 	{
 		this.space.install(Locale.builder().setCode("").build());
